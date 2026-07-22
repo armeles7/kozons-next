@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoZons - Le réseau social africain</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f4f4f4; }
+        .logo { width: 100px; margin-bottom: 20px; }
+        h1 { color: #1E9E4A; }
+        .btn { display: inline-block; padding: 15px 30px; background-color: #1E9E4A; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <img src="https://raw.githubusercontent.com/armeles7/kozons-releases/main/logo.png" alt="KoZons" class="logo">
+    <h1>🌍 Bienvenue sur KoZons</h1>
+    <p>Le réseau social où l'on parle, on écoute, et on kiffe 🔥</p>
+    <a href="https://github.com/armeles7/kozons-releases/releases/latest/download/Kozons.apk" class="btn">Télécharger l'application</a>
+</body>
+</html>

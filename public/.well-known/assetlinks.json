@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "ci.kozons",
+      "sha256_cert_fingerprints": [
+        "2a:c6:76:b9:6c:b4:97:8f:13:d2:6a:50:69:d7:88:bc:fe:64:1c:ce:dd:b1:56:c4:1f:3f:a3:da:09:e8:02:fe"
+      ]
+    }
+  }
+]

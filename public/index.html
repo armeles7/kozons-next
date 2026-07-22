@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>KoZons — Le réseau social panafricain</title>
+<meta name="description" content="KoZons : on parle, on écoute, on kiffe. Le réseau social panafricain.">
+<link rel="icon" href="/kozons_logo.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1E9E4A">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KoZons">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init({ publicKey: 'kOYG1JxJdY0U_JBWC' });</script>
+</head>
+<body>
+
+<!-- ============ ÉCRAN DE CHARGEMENT ============ -->
+<div id="ecran-chargement" class="ecran-chargement">
+  <div class="splash-centre">
+    <img src="/kozons_logo.png" class="splash-logo" alt="KoZons">
+    <h1 class="splash-titre">KoZons</h1>
+    <p class="splash-slogan">on parle, on écoute, on kiffe</p>
+  </div>
+  <div class="splash-bas">
+    <div class="splash-progress"><div class="splash-progress-remplie"></div></div>
+    <p class="splash-footer-titre">KoZons: on parle, on écoute, on kiffe</p>
+    <p class="splash-footer-sous">développé par KNA +2250769306837</p>
+  </div>
+</div>
+
+<!-- ============ ÉCRAN AUTHENTIFICATION ============ -->
+<div id="ecran-auth" class="ecran-auth cache">
+  <div class="auth-centre">
+    <div class="auth-logo-bloc">
+      <img src="/kozons_logo.png" alt="KoZons" class="auth-logo-img">
+    </div>
+    <h1 class="auth-titre">Ko<span class="accent">Zons</span></h1>
+    <p class="auth-slogan">on parle, on écoute, on kiffe</p>
+  </div>
+  <div class="auth-bas">
+    <p id="auth-erreur" class="auth-erreur cache"></p>
+    <button id="btn-google" class="bouton-google-orange">
+      Continuer avec Google
+    </button>
+  </div>
+</div>
+
+<!-- ============ APPLICATION PRINCIPALE ============ -->
+<div id="app" class="app cache">
+
+  <!-- Barre du haut -->
+  <header class="barre-haut">
+    <h1 class="app-logo">Ko<span class="accent">Zons</span></h1>
+    <div class="barre-haut-actions">
+      <button class="icone-btn" data-ecran="recherche" title="Rechercher">🔍</button>
+      <button class="icone-btn" data-ecran="messages" title="Messages">✉️<span id="badge-messages" class="badge cache">0</span></button>
+      <button class="icone-btn" data-ecran="profil" title="Profil">👤</button>
+    </div>
+  </header>
+
+  <main class="contenu">
+
+    <!-- ---- ACCUEIL ---- -->
+    <section id="ecran-accueil" class="ecran">
+      <h3 class="section-titre">Stories (Abonnés)</h3>
+      <div class="grandes-cartes-barre" id="stories-barre"></div>
+
+      <h3 class="section-titre">Reels (Abonnements)</h3>
+      <div class="grandes-cartes-barre" id="reels-barre"></div>
+
+      <div class="fil-filtres" id="fil-filtres">
+        <button class="filtre-btn actif" data-filtre="TOUS">Tous</button>
+        <button class="filtre-btn" data-filtre="ABONNEMENTS">Abonnements</button>
+        <button class="filtre-btn" data-filtre="CANAUX">Canaux</button>
+      </div>
+
+      <div class="composer" id="composer">
+        <textarea id="composer-texte" placeholder="Quoi de neuf ? (@ pour mentionner quelqu'un)" rows="2"></textarea>
+        <div id="composer-mentions" class="mentions-dropdown cache"></div>
+        <div id="composer-apercu" class="composer-apercu cache"></div>
+        <div class="composer-actions">
+          <select id="composer-type">
+            <option value="TEXTE">📝 Texte</option>
+            <option value="COULEUR">🎨 Post coloré</option>
+            <option value="IMAGE">🖼️ Photo</option>
+            <option value="VIDEO">🎬 Vidéo</option>
+            <option value="AUDIO">🎙️ Audio</option>
+          </select>
+          <div id="composer-couleurs" class="composer-couleurs cache">
+            <button type="button" class="pastille-couleur actif" data-couleur="#1E9E4A" style="background:#1E9E4A"></button>
+            <button type="button" class="pastille-couleur" data-couleur="#FF6F61" style="background:#FF6F61"></button>
+            <button type="button" class="pastille-couleur" data-couleur="#2563EB" style="background:#2563EB"></button>
+            <button type="button" class="pastille-couleur" data-couleur="#D32F2F" style="background:#D32F2F"></button>
+            <button type="button" class="pastille-couleur" data-couleur="#7C3AED" style="background:#7C3AED"></button>
+            <button type="button" class="pastille-couleur" data-couleur="#111827" style="background:#111827"></button>
+          </div>
+          <div id="composer-audio-zone" class="audio-zone cache">
+            <button type="button" id="composer-audio-btn" class="bouton bouton-secondaire bouton-sm">🔴 Enregistrer</button>
+            <span id="composer-audio-chrono" class="audio-chrono cache">0:00</span>
+          </div>
+          <input type="file" id="composer-fichier" class="cache" accept="image/*">
+          <span id="composer-fichier-note" class="composer-fichier-note cache">Astuce : sélectionne plusieurs photos pour créer un carrousel</span>
+          <button id="composer-publier" class="bouton bouton-principal">Publier</button>
+        </div>
+      </div>
+
+      <div id="fil-liste" class="fil-liste"></div>
+      <button id="fil-plus" class="bouton bouton-secondaire bouton-centre cache">Voir plus</button>
+    </section>
+
+    <!-- ---- GROUPES ---- -->
+    <section id="ecran-groupes" class="ecran cache">
+      <div class="canaux-entete">
+        <h2>Groupes</h2>
+        <button class="bouton bouton-principal bouton-sm" data-creer-canal="GROUPE">+ Créer</button>
+      </div>
+      <div id="groupes-mes" class="canaux-liste"></div>
+      <h3 class="sous-titre">Suggestions</h3>
+      <div id="groupes-suggeres" class="canaux-liste"></div>
+    </section>
+
+    <!-- ---- PAGES ---- -->
+    <section id="ecran-pages" class="ecran cache">
+      <div class="canaux-entete">
+        <h2>Pages</h2>
+        <button class="bouton bouton-principal bouton-sm" data-creer-canal="PAGE">+ Créer</button>
+      </div>
+      <div id="pages-mes" class="canaux-liste"></div>
+      <h3 class="sous-titre">Suggestions</h3>
+      <div id="pages-suggeres" class="canaux-liste"></div>
+    </section>
+
+    <!-- ---- DÉTAIL CANAL ---- -->
+    <section id="ecran-canal" class="ecran cache">
+      <div id="canal-header-visuel" class="canal-header-visuel">
+        <button class="retour-btn canal-retour-btn" data-retour="canaux">←</button>
+        <button id="canal-btn-params" class="canal-params-btn cache">⚙️</button>
+      </div>
+      <div id="canal-entete" class="canal-entete"></div>
+      <div class="profil-onglets">
+        <button class="profil-onglet-btn actif" data-souscanal="accueil">Membres</button>
+        <button class="profil-onglet-btn" data-souscanal="publications">Publications</button>
+        <button class="profil-onglet-btn" data-souscanal="medias">Médias</button>
+      </div>
+      <div id="canal-accueil"></div>
+      <div id="canal-composer" class="cache">
+        <div class="composer" style="margin:12px 0;">
+          <textarea id="canal-texte" placeholder="Publier dans ce groupe/page..." rows="2"></textarea>
+          <div class="composer-actions">
+            <label for="canal-fichier" class="bouton bouton-secondaire bouton-sm" style="cursor:pointer;">🖼️ Photo/Vidéo</label>
+            <input type="file" id="canal-fichier" accept="image/*,video/*" class="cache">
+            <button id="canal-publier" class="bouton bouton-principal bouton-sm">Publier</button>
+          </div>
+          <div id="canal-apercu" class="composer-apercu cache"></div>
+        </div>
+      </div>
+      <div id="canal-fil" class="fil-liste cache"></div>
+      <div id="canal-medias" class="cache" style="padding:4px;"></div>
+    </section>
+
+    <!-- ---- VIDÉO ---- -->
+    <section id="ecran-video" class="ecran ecran-reels cache">
+      <div id="video-liste" class="reels-conteneur"></div>
+    </section>
+
+    <!-- ---- DJASSA (MARKETPLACE) ---- -->
+    <section id="ecran-djassa" class="ecran cache">
+      <div class="canaux-entete">
+        <h2>Djassa 🛒</h2>
+        <button class="bouton bouton-principal bouton-sm" id="djassa-publier-btn">+ Vendre</button>
+      </div>
+      <div id="djassa-form" class="composer cache">
+        <input type="text" id="djassa-titre" placeholder="Titre de l'article">
+        <textarea id="djassa-description" placeholder="Description" rows="2"></textarea>
+        <div class="composer-actions">
+          <input type="number" id="djassa-prix" placeholder="Prix (FCFA)" min="0">
+          <input type="text" id="djassa-categorie" placeholder="Catégorie">
+          <input type="tel" id="djassa-tel" placeholder="Téléphone">
+        </div>
+        <div id="djassa-apercu" class="composer-apercu cache"></div>
+        <label class="djassa-label-photo">
+          📷 Photo de l'article
+          <input type="file" id="djassa-image" accept="image/*" multiple>
+        </label>
+        <button id="djassa-publier-confirmer" class="bouton bouton-principal">Publier l'annonce</button>
+      </div>
+      <div id="djassa-liste" class="djassa-grille"></div>
+    </section>
+
+    <!-- ---- NOTIFICATIONS ---- -->
+    <section id="ecran-notifications" class="ecran cache">
+      <h2>Notifications</h2>
+      <div id="notifications-liste" class="notifications-liste"></div>
+    </section>
+
+    <!-- ---- RECHERCHE ---- -->
+    <section id="ecran-recherche" class="ecran cache">
+      <input type="search" id="recherche-input" class="recherche-input" placeholder="Rechercher...">
+      <div class="fil-filtres">
+        <button class="filtre-btn actif" data-recherche-cat="TOUS">Tous</button>
+        <button class="filtre-btn" data-recherche-cat="PERSONNES">Personnes</button>
+        <button class="filtre-btn" data-recherche-cat="CANAUX">Canaux</button>
+        <button class="filtre-btn" data-recherche-cat="POSTS">Posts</button>
+        <button class="filtre-btn" data-recherche-cat="DJASSA">Djassa</button>
+      </div>
+      <div id="recherche-resultats">
+        <div data-cat="PERSONNES"><h3 class="sous-titre" style="margin-top:0;">Personnes</h3><div id="recherche-profils" class="canaux-liste"></div></div>
+        <div data-cat="CANAUX"><h3 class="sous-titre">Canaux</h3><div id="recherche-canaux" class="canaux-liste"></div></div>
+        <div data-cat="POSTS"><h3 class="sous-titre">Publications</h3><div id="recherche-posts" class="fil-liste"></div></div>
+        <div data-cat="DJASSA"><h3 class="sous-titre">Djassa</h3><div id="recherche-djassa" class="djassa-grille"></div></div>
+      </div>
+    </section>
+
+    <!-- ---- MESSAGES ---- -->
+    <section id="ecran-messages" class="ecran cache">
+      <h2>Messages</h2>
+      <div id="conversations-liste" class="conversations-liste"></div>
+    </section>
+
+    <!-- ---- CHAT ---- -->
+    <section id="ecran-chat" class="ecran cache">
+      <button class="retour-btn" data-retour="messages">← Retour</button>
+      <div id="chat-entete" class="chat-entete"></div>
+      <div id="chat-messages" class="chat-messages"></div>
+      <div id="chat-apercu-media" class="chat-apercu-media cache"></div>
+      <form id="chat-form" class="chat-form">
+        <button type="button" id="chat-audio-btn" class="bouton-micro" title="Message vocal">🎙️</button>
+        <span id="chat-audio-chrono" class="audio-chrono cache">0:00</span>
+        <label for="chat-media-input" class="bouton-micro" title="Photo/Vidéo">🖼️</label>
+        <input type="file" id="chat-media-input" accept="image/*,video/*" class="cache">
+        <input type="text" id="chat-input" placeholder="Écris un message..." autocomplete="off">
+        <button type="submit" class="bouton bouton-principal">➤</button>
+      </form>
+    </section>
+
+    <!-- ---- PROFIL ---- -->
+    <section id="ecran-profil" class="ecran cache">
+      <div id="profil-contenu"></div>
+    </section>
+
+  </main>
+
+  <!-- Barre de navigation basse -->
+  <nav class="barre-basse">
+    <button class="nav-btn actif" data-ecran="accueil"><span>🏠</span>Accueil</button>
+    <button class="nav-btn" data-ecran="groupes"><span>👥</span>Groupes</button>
+    <button class="nav-btn" data-ecran="pages"><span>🚩</span>Pages</button>
+    <button class="nav-btn" data-ecran="video"><span>▶️</span>Vidéo</button>
+    <button class="nav-btn" data-ecran="djassa"><span>🏪</span>Djassa</button>
+    <button class="nav-btn" data-ecran="notifications"><span>🔔</span>Notifs<span id="badge-notifs" class="badge cache">0</span></button>
+  </nav>
+</div>
+
+<!-- Boîte modale générique (visionneuse story, confirmation, etc.) -->
+<div id="modale" class="modale cache">
+  <div class="modale-fond" id="modale-fond"></div>
+  <div class="modale-contenu" id="modale-contenu"></div>
+</div>
+
+<div id="toast" class="toast cache"></div>
+
+<div id="bandeau-install" class="bandeau-install cache">
+  <img src="/kozons_logo.png" alt="">
+  <div class="bandeau-install-texte">
+    <b>Installer KoZons</b>
+    <span>Accès rapide depuis ton écran d'accueil, même hors-ligne</span>
+  </div>
+  <button id="btn-install-oui" class="bouton bouton-principal bouton-sm">Installer</button>
+  <button id="btn-install-non" class="bandeau-install-fermer">✕</button>
+</div>
+
+<div id="bandeau-notif" class="bandeau-install cache">
+  <span style="font-size:1.6rem;">🔔</span>
+  <div class="bandeau-install-texte">
+    <b>Activer les notifications</b>
+    <span>Sois prévenu(e) même quand KoZons est en arrière-plan</span>
+  </div>
+  <button id="btn-notif-oui" class="bouton bouton-principal bouton-sm">Activer</button>
+  <button id="btn-notif-non" class="bandeau-install-fermer">✕</button>
+</div>
+
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>
